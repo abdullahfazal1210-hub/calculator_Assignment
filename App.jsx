@@ -1,4 +1,8 @@
-
+/**
+ * React Native Calculator App
+ * Supports basic (+, -, *, /) and advanced (%, √, x², power) operations
+ * Responsive UI + Functional Components + Hooks Only
+ */
 
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
@@ -7,14 +11,17 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 const screenWidth = Dimensions.get('window').width;
 
 function App() {
-
+  // 🔹 State variables
   const [firstNumber, setFirstNumber] = useState('');
   const [userInput, setUserInput] = useState('');
   const [operation, setOperation] = useState('');
   const [result, setResult] = useState('');
 
+  // 🔹 Perform the calculation
   const calculate = () => {
-    if (firstNumber === '' || userInput === '' || operation === '') return '';
+    if (firstNumber === '' || userInput === '' || operation === '') {
+      return '';
+    }
 
     const num1 = parseFloat(firstNumber);
     const num2 = parseFloat(userInput);
@@ -46,7 +53,7 @@ function App() {
     return res.toString();
   };
 
-
+  // 🔹 When operator is pressed
   const handleOperation = (op) => {
     const res = calculate();
     if (res !== '') {
@@ -59,7 +66,7 @@ function App() {
     setResult('');
   };
 
-
+  // 🔹 When equals (=) is pressed
   const handleEquals = () => {
     const res = calculate();
     setResult(res);
@@ -68,14 +75,17 @@ function App() {
     setOperation('');
   };
 
-
+  // 🔹 Advanced operations
   const handleAdvanced = (type) => {
     if (userInput === '') return;
     const num = parseFloat(userInput);
     let res = 0;
 
-    if (type === 'sqrt') res = Math.sqrt(num);
-    else if (type === 'square') res = Math.pow(num, 2);
+    if (type === 'sqrt') {
+      res = Math.sqrt(num);
+    } else if (type === 'square') {
+      res = Math.pow(num, 2);
+    }
 
     setResult(res.toString());
     setUserInput(res.toString());
@@ -83,7 +93,7 @@ function App() {
     setOperation('');
   };
 
-
+  // 🔹 Clear everything
   const clearAll = () => {
     setUserInput('');
     setFirstNumber('');
@@ -91,7 +101,7 @@ function App() {
     setResult('');
   };
 
-
+  // 🔹 Helper for number press
   const handleNumberPress = (num) => {
     setUserInput(userInput + num);
   };
@@ -99,7 +109,7 @@ function App() {
   return (
     <SafeAreaProvider>
       <View style={styles.container}>
-       
+        {/* Display section */}
         <View style={styles.displayContainer}>
           <Text style={styles.expressionText}>
             {firstNumber} {operation} {userInput}
@@ -107,43 +117,49 @@ function App() {
           <Text style={styles.resultText}>{result}</Text>
         </View>
 
-      
+        {/* Button Grid */}
         <View style={styles.buttonGrid}>
+          {/* Row 1 */}
           <Row>
             <CalcButton title="7" onPress={() => handleNumberPress('7')} />
             <CalcButton title="8" onPress={() => handleNumberPress('8')} />
             <CalcButton title="9" onPress={() => handleNumberPress('9')} />
-            <CalcButton title="/" onPress={() => handleOperation('/')} />
+            <CalcButton title="/" onPress={() => handleOperation('/')} color="#ff8c00" />
           </Row>
 
+          {/* Row 2 */}
           <Row>
             <CalcButton title="4" onPress={() => handleNumberPress('4')} />
             <CalcButton title="5" onPress={() => handleNumberPress('5')} />
             <CalcButton title="6" onPress={() => handleNumberPress('6')} />
-            <CalcButton title="*" onPress={() => handleOperation('*')} />
+            <CalcButton title="*" onPress={() => handleOperation('*')} color="#ff8c00" />
           </Row>
 
+          {/* Row 3 */}
           <Row>
             <CalcButton title="1" onPress={() => handleNumberPress('1')} />
             <CalcButton title="2" onPress={() => handleNumberPress('2')} />
             <CalcButton title="3" onPress={() => handleNumberPress('3')} />
-            <CalcButton title="-" onPress={() => handleOperation('-')} />
+            <CalcButton title="-" onPress={() => handleOperation('-')} color="#ff8c00" />
           </Row>
 
+          {/* Row 4 */}
           <Row>
             <CalcButton title="0" onPress={() => handleNumberPress('0')} />
             <CalcButton title="." onPress={() => handleNumberPress('.')} />
-            <CalcButton title="=" onPress={handleEquals} />
-            <CalcButton title="+" onPress={() => handleOperation('+')} />
+            <CalcButton title="=" onPress={handleEquals} color="#4CAF50" />
+            <CalcButton title="+" onPress={() => handleOperation('+')} color="#ff8c00" />
           </Row>
 
+          {/* Row 5 - Advanced */}
           <Row>
-            <CalcButton title="C" onPress={clearAll} />
+            <CalcButton title="Clear" onPress={clearAll} color="#f44336" />
             <CalcButton title="√" onPress={() => handleAdvanced('sqrt')} />
             <CalcButton title="x²" onPress={() => handleAdvanced('square')} />
             <CalcButton title="%" onPress={() => handleOperation('%')} />
           </Row>
 
+          {/* Row 6 - Power */}
           <Row>
             <CalcButton title="xʸ" onPress={() => handleOperation('^')} />
           </Row>
@@ -153,26 +169,35 @@ function App() {
   );
 }
 
-const Row = ({ children }) => <View style={styles.row}>{children}</View>;
+/**
+ * 🔹 Row Component for cleaner layout
+ */
+const Row = ({ children }) => (
+  <View style={styles.row}>{children}</View>
+);
 
-
-const CalcButton = ({ title, onPress }) => (
-  <TouchableOpacity style={styles.button} onPress={onPress}>
+/**
+ * 🔹 Custom styled button component
+ */
+const CalcButton = ({ title, onPress, color = '#333' }) => (
+  <TouchableOpacity style={[styles.button, { backgroundColor: color }]} onPress={onPress}>
     <Text style={styles.buttonText}>{title}</Text>
   </TouchableOpacity>
 );
 
-
+/**
+ * 🔹 Styles
+ */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f1f2f3',
     paddingTop: 50,
     alignItems: 'center',
   },
   displayContainer: {
     width: screenWidth * 0.9,
-    backgroundColor: '#000',
+    backgroundColor: '#222',
     borderRadius: 10,
     padding: 15,
     marginBottom: 20,
@@ -202,12 +227,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     paddingVertical: 18,
     borderRadius: 10,
-    backgroundColor: '#000',
     alignItems: 'center',
   },
   buttonText: {
     fontSize: 20,
-    color: '#fff', 
+    color: 'white',
     fontWeight: 'bold',
   },
 });
