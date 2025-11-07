@@ -1,8 +1,3 @@
-/**
- * React Native Calculator App
- * Supports basic (+, -, *, /) and advanced (%, √, x², power) operations
- * Responsive UI + Functional Components + Hooks Only
- */
 
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
@@ -11,13 +6,13 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 const screenWidth = Dimensions.get('window').width;
 
 function App() {
-  // 🔹 State variables
+s
   const [firstNumber, setFirstNumber] = useState('');
   const [userInput, setUserInput] = useState('');
   const [operation, setOperation] = useState('');
   const [result, setResult] = useState('');
 
-  // 🔹 Perform the calculation
+
   const calculate = () => {
     if (firstNumber === '' || userInput === '' || operation === '') {
       return '';
@@ -53,7 +48,7 @@ function App() {
     return res.toString();
   };
 
-  // 🔹 When operator is pressed
+
   const handleOperation = (op) => {
     const res = calculate();
     if (res !== '') {
@@ -66,7 +61,6 @@ function App() {
     setResult('');
   };
 
-  // 🔹 When equals (=) is pressed
   const handleEquals = () => {
     const res = calculate();
     setResult(res);
@@ -75,7 +69,7 @@ function App() {
     setOperation('');
   };
 
-  // 🔹 Advanced operations
+
   const handleAdvanced = (type) => {
     if (userInput === '') return;
     const num = parseFloat(userInput);
@@ -93,7 +87,7 @@ function App() {
     setOperation('');
   };
 
-  // 🔹 Clear everything
+
   const clearAll = () => {
     setUserInput('');
     setFirstNumber('');
@@ -101,7 +95,7 @@ function App() {
     setResult('');
   };
 
-  // 🔹 Helper for number press
+
   const handleNumberPress = (num) => {
     setUserInput(userInput + num);
   };
@@ -109,7 +103,7 @@ function App() {
   return (
     <SafeAreaProvider>
       <View style={styles.container}>
-        {/* Display section */}
+       
         <View style={styles.displayContainer}>
           <Text style={styles.expressionText}>
             {firstNumber} {operation} {userInput}
@@ -117,9 +111,8 @@ function App() {
           <Text style={styles.resultText}>{result}</Text>
         </View>
 
-        {/* Button Grid */}
         <View style={styles.buttonGrid}>
-          {/* Row 1 */}
+        
           <Row>
             <CalcButton title="7" onPress={() => handleNumberPress('7')} />
             <CalcButton title="8" onPress={() => handleNumberPress('8')} />
@@ -127,7 +120,7 @@ function App() {
             <CalcButton title="/" onPress={() => handleOperation('/')} color="#ff8c00" />
           </Row>
 
-          {/* Row 2 */}
+      
           <Row>
             <CalcButton title="4" onPress={() => handleNumberPress('4')} />
             <CalcButton title="5" onPress={() => handleNumberPress('5')} />
@@ -135,7 +128,7 @@ function App() {
             <CalcButton title="*" onPress={() => handleOperation('*')} color="#ff8c00" />
           </Row>
 
-          {/* Row 3 */}
+   
           <Row>
             <CalcButton title="1" onPress={() => handleNumberPress('1')} />
             <CalcButton title="2" onPress={() => handleNumberPress('2')} />
@@ -143,7 +136,7 @@ function App() {
             <CalcButton title="-" onPress={() => handleOperation('-')} color="#ff8c00" />
           </Row>
 
-          {/* Row 4 */}
+     
           <Row>
             <CalcButton title="0" onPress={() => handleNumberPress('0')} />
             <CalcButton title="." onPress={() => handleNumberPress('.')} />
@@ -151,7 +144,7 @@ function App() {
             <CalcButton title="+" onPress={() => handleOperation('+')} color="#ff8c00" />
           </Row>
 
-          {/* Row 5 - Advanced */}
+        
           <Row>
             <CalcButton title="Clear" onPress={clearAll} color="#f44336" />
             <CalcButton title="√" onPress={() => handleAdvanced('sqrt')} />
@@ -159,7 +152,7 @@ function App() {
             <CalcButton title="%" onPress={() => handleOperation('%')} />
           </Row>
 
-          {/* Row 6 - Power */}
+        
           <Row>
             <CalcButton title="xʸ" onPress={() => handleOperation('^')} />
           </Row>
@@ -169,25 +162,19 @@ function App() {
   );
 }
 
-/**
- * 🔹 Row Component for cleaner layout
- */
+
 const Row = ({ children }) => (
   <View style={styles.row}>{children}</View>
 );
 
-/**
- * 🔹 Custom styled button component
- */
+
 const CalcButton = ({ title, onPress, color = '#333' }) => (
   <TouchableOpacity style={[styles.button, { backgroundColor: color }]} onPress={onPress}>
     <Text style={styles.buttonText}>{title}</Text>
   </TouchableOpacity>
 );
 
-/**
- * 🔹 Styles
- */
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
