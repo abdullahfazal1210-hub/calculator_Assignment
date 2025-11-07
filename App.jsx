@@ -1,8 +1,4 @@
-/**
- * Simple React Native Calculator App
- * Clean Black & White Theme
- * Supports basic (+, -, *, /) and advanced (%, √, x², power) operations
- */
+
 
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
@@ -11,13 +7,12 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 const screenWidth = Dimensions.get('window').width;
 
 function App() {
-  // 🔹 States for numbers, operation, and result
+
   const [firstNumber, setFirstNumber] = useState('');
   const [userInput, setUserInput] = useState('');
   const [operation, setOperation] = useState('');
   const [result, setResult] = useState('');
 
-  // 🔹 Calculation logic
   const calculate = () => {
     if (firstNumber === '' || userInput === '' || operation === '') return '';
 
@@ -51,7 +46,7 @@ function App() {
     return res.toString();
   };
 
-  // 🔹 Handle operation button press
+
   const handleOperation = (op) => {
     const res = calculate();
     if (res !== '') {
@@ -64,7 +59,7 @@ function App() {
     setResult('');
   };
 
-  // 🔹 Handle equals (=)
+
   const handleEquals = () => {
     const res = calculate();
     setResult(res);
@@ -73,7 +68,7 @@ function App() {
     setOperation('');
   };
 
-  // 🔹 Handle advanced operations (√, x²)
+
   const handleAdvanced = (type) => {
     if (userInput === '') return;
     const num = parseFloat(userInput);
@@ -88,7 +83,7 @@ function App() {
     setOperation('');
   };
 
-  // 🔹 Clear everything
+
   const clearAll = () => {
     setUserInput('');
     setFirstNumber('');
@@ -96,7 +91,7 @@ function App() {
     setResult('');
   };
 
-  // 🔹 Add numbers to input
+
   const handleNumberPress = (num) => {
     setUserInput(userInput + num);
   };
@@ -104,7 +99,7 @@ function App() {
   return (
     <SafeAreaProvider>
       <View style={styles.container}>
-        {/* Display section */}
+       
         <View style={styles.displayContainer}>
           <Text style={styles.expressionText}>
             {firstNumber} {operation} {userInput}
@@ -112,7 +107,7 @@ function App() {
           <Text style={styles.resultText}>{result}</Text>
         </View>
 
-        {/* Button grid */}
+      
         <View style={styles.buttonGrid}>
           <Row>
             <CalcButton title="7" onPress={() => handleNumberPress('7')} />
@@ -158,17 +153,16 @@ function App() {
   );
 }
 
-// 🔹 Row Component
 const Row = ({ children }) => <View style={styles.row}>{children}</View>;
 
-// 🔹 Button Component
+
 const CalcButton = ({ title, onPress }) => (
   <TouchableOpacity style={styles.button} onPress={onPress}>
     <Text style={styles.buttonText}>{title}</Text>
   </TouchableOpacity>
 );
 
-// 🔹 Styles (Black & White Theme)
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
